@@ -1,10 +1,24 @@
-from feat.utils import get_test_data_path
-from feat.plotting import imshow
-import os
+import os.path
 
-test_data_dir = get_test_data_path()
+from feat import Detector
+from PIL import Image
+import matplotlib.pyplot as plt
 
-single_face_img_path = os.path.join(test_data_dir, "")
+face_model = "retinaface"
+landmark_model = "mobilenet"
+au_model = "rf"
+emotion_model = "resmasknet"
+detector = Detector(face_model = face_model, landmark_model = landmark_model, au_model = au_model, emotion_model = emotion_model)
 
-imshow(single_face_img_path)
+test_image = os.path.join("frame0.jpg")
+
+f, ax = plt.subplots()
+im = Image.open(test_image)
+ax.imshow(im)
+
+image_prediction = detector.detect_image(test_image)
+
+image_prediction
+
+image_prediction.plot_detections()
 
